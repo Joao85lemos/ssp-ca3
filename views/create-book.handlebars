@@ -1,0 +1,50 @@
+<form class="mt-4" action="/create-book" method="post">
+    <div class="row">
+        <div class="col-4 mb-">
+            <label for="tittle" class="form-label"></label>
+            <input type="text" class="form-control" id="tittle" name="tittle">
+        </div>
+        <div class="col-4 mb-3">
+            <label for="author" class="form-label"></label>
+            <input type="text" class="form-control" id="author" name="author">
+        </div>
+        <div class="col-4 mb-3">
+            <label for="genre" class="form-label"></label>
+            <input type="text" class="form-control" id="genre" name="genre">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 mb-3">
+            <label for="edition" class="form-label"></label>
+            <input type="text" class="form-control" id="edition" name="edition">
+        </div>
+        <div class="col-4 mb-3">
+            <label for="publisher" class="form-label"></label>
+            <input type="text" class="form-control" id="publisher" name="publisher">
+        </div>
+        <div class="col-4 mb-3">
+            <label for="language" class="form-label"></label>
+            <select class="form-select" id="language" name="language">
+                <option selected>(Select one)</option>
+                <option value="English">English</option>
+                <option value="French">French</option>
+                <option value="Spanish">Spanish</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 mb-">
+            <label for="price" class="form-label"></label>
+            <input type="text" class="form-control" id="price" name="price">
+        </div>
+        <div class="col-6 mb-3">
+            <label for="quantity" class="form-label"></label>
+            <input type="number" class="form-control" id="quantity" name="quantity">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>

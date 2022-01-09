@@ -1,0 +1,42 @@
+<table class="mt-4 table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Age</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each users}}
+    <tr>
+        <td>{{name}}</td>
+        <td>{{age}}</td>
+        <td>{{email}}</td>
+        <td>
+            <div class="row">
+                <div class="col-2">
+                    <a href="/users/edit/{{id}}" class="btn btn-primary">Edit</a>
+                </div>
+                <div class="col-2">
+                    <a href="/users/show/{{id}}" class="btn btn-info">Show</a>
+                </div>
+                <div class="col-2">
+                    <a id="btn-delete" class="btn btn-danger" onclick="deleteRecord({{id}})">Delete</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+<script>
+    function deleteRecord(id) {
+        var result = confirm("Do you really want to delete this record? This process cannot be undone.");
+        if (result) {
+            let button = document.getElementById("btn-delete");
+            button.href = "/delete/" + id;
+        }
+    }
+</script>

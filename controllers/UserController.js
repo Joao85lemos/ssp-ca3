@@ -1,4 +1,5 @@
 const user = require('../models/User');
+const bcrypt = require("bcryptjs");
 
 class UserController {
     create (req, res) {
@@ -23,19 +24,114 @@ class UserController {
             res.redirect('/');
         }).catch(function (error){
             res.send("Error: " + error);
-        })
+        });
     }
 
-    edit (name, birth_date, email, password) {
+    edit (req, res) {
+        let user_id = req.params.id;
 
+        const findUser = user.findOne({
+            where: {id: user_id},
+            attributes: ['id', 'name', 'age', 'email']
+        }).then(function (rawUser){
+            let users = [];
+            users.push(rawUser.dataValues);
+            if (findUser === null) {
+                res.send("Not found!");
+            } else {
+                const object = {
+                    mapUser: users.map(data => {
+                        return {
+                            id: data.id,
+                            name: data.name,
+                            age: data.age,
+                            email: data.email,
+                        }
+                    })
+                }
+                res.render('form-register', {user: object.mapUser});
+            }
+        });
     }
 
-    delete (email) {
+    update (req, res) {
+        let id = req.body.id;
+        let name = req.body.name;
+        let email = req.body.email;
+        let password = req.body.password;
 
+        const bcrypt = require('bcryptjs');
+        const salt = bcrypt.genSaltSync(10);
+        let hash = bcrypt.hashSync(password, salt);
+
+        user.update({
+            name: name,
+            email: email,
+            password: hash
+        }, {where: {id: id},}).then(function (){
+            res.redirect('/home');
+        }).catch(function (error){
+            res.send("Error: " + error);
+        });
     }
 
-    show () {
+    delete (req, res) {
+        let user_id = req.params.id;
 
+        user.destroy({ where: { id: user_id } }).then(function (){
+            res.redirect('/users');
+        }).catch(function (error){
+            res.send("Error: " + error);
+        });
+    }
+
+    show (req, res) {
+        let user_id = req.params.id;
+
+        if (user_id) {
+            const findUser = user.findOne({
+                where: {id: user_id},
+                attributes: ['id', 'name', 'age', 'email', 'admin', 'createdAt']
+            }).then(function (rawUser){
+                let users = [];
+                users.push(rawUser.dataValues);
+                if (findUser === null) {
+                    res.send("Not found!");
+                } else {
+                    const object = {
+                        mapUser: users.map(data => {
+                            return {
+                                id: data.id,
+                                name: data.name,
+                                age: data.age,
+                                email: data.email,
+                                admin: data.admin,
+                                createdAt: data.createdAt
+                            }
+                        })
+                    }
+                    res.render('show-user', {user: object.mapUser});
+                }
+            });
+        } else {
+            user.findAll({
+                attributes: ['id', 'name', 'age', 'email']
+            }).then(function (rawUsers){
+                const object = {
+                    users: rawUsers.map(data => {
+                        return {
+                            id: data.id,
+                            name: data.name,
+                            age: data.age,
+                            email: data.email
+                        }
+                    })
+                }
+                res.render('list-users', {users: object.users});
+            }).catch(function (error){
+                res.send("Error: " + error);
+            });
+        }
     }
 }
 

@@ -1,0 +1,27 @@
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Hello {{name}}!</h1>
+            <p class="lead text-muted">See your orders on the table below:</p>
+            <p>
+                <a href="/edit/{{id}}" class="btn btn-primary my-2">Edit my account</a>
+                <a href="" class="btn btn-danger my-2" onclick="deleteRecord({{id}})">Delete my account</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<div class="py-5 bg-light">
+    <div class="container">
+    </div>
+</div>
+
+<script>
+    function deleteRecord(id) {
+        var result = confirm("Do you really want to delete this record? This process cannot be undone.");
+        if (result) {
+            let button = document.getElementById("btn-delete");
+            button.href = "/delete/" + id;
+        }
+    }
+</script>

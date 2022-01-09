@@ -1,22 +1,26 @@
-<form class="mt-4" action="/register" method="post">
+{{#each user}}
+<form class="mt-4" action="{{#if id}}/users/edit{{else}}/register{{/if}}" method="post">
+    {{#if id}}
+        <input type="number" class="d-none form-control" name="id" value="{{id}}">
+    {{/if}}
     <div class="row">
         <div class="col-6 mb-3">
             <label for="user_name" class="form-label">Name and Surname</label>
-            <input type="text" class="form-control" id="user_name" name="name">
+            <input type="text" class="form-control" id="user_name" name="name" value="{{#if name}}{{name}}{{/if}}" required>
         </div>
         <div class="col-6 mb-3">
             <label for="user_birth_date" class="form-label">Birth date</label>
-            <input type="date" class="form-control" id="user_birth_date" name="birth_date">
+            <input type="date" class="form-control" id="user_birth_date" name="birth_date" min="" max="" {{#if id}} disabled {{else}} required {{/if}}>
         </div>
     </div>
     <div class="row">
         <div class="col-6 mb-3">
             <label for="user_email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="user_email" name="email">
+            <input type="email" class="form-control" id="user_email" name="email" value="{{#if email}}{{email}}{{/if}}" required>
         </div>
         <div class="col-6 mb-3">
             <label for="user-password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="user-password" name="password">
+            <input type="password" class="form-control" id="user-password" name="password" required>
         </div>
     </div>
     <div class="row">
@@ -25,3 +29,16 @@
         </div>
     </div>
 </form>
+{{/each}}
+
+<script>
+    document.getElementById("user_birth_date").onclick = function () {
+        let min = new Date().getFullYear() - 100;
+        let max = new Date().getFullYear() - 18;
+
+        let date = document.getElementById("user_birth_date");
+
+        date.min = min + "-01-01";
+        date.max = max + "-12-31";
+    }
+</script>
