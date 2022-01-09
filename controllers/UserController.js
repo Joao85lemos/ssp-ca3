@@ -110,7 +110,7 @@ class UserController {
                             }
                         })
                     }
-                    res.render('show-user', {user: object.mapUser});
+                    res.render('./user/show', {user: object.mapUser});
                 }
             });
         } else {
@@ -127,7 +127,7 @@ class UserController {
                         }
                     })
                 }
-                res.render('list-users', {users: object.users});
+                res.render('./user/list', {users: object.users});
             }).catch(function (error){
                 res.send("Error: " + error);
             });

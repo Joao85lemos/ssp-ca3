@@ -7,6 +7,9 @@ const Book = db.sequelize.define('books', {
     author: {
         type: db.Sequelize.STRING
     },
+    description: {
+        type: db.Sequelize.TEXT
+    },
     edition: {
         type: db.Sequelize.INTEGER,
     },

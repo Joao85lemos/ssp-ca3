@@ -4,6 +4,7 @@ class BookController {
     create (req, res) {
         let tittle = req.body.tittle;
         let author = req.body.author;
+        let description = req.body.description;
         let edition = req.body.edition;
         let genre = req.body.genre;
         let publisher = req.body.publisher;
@@ -14,6 +15,7 @@ class BookController {
         book.create({
             tittle: tittle,
             author: author,
+            description: description,
             edition: edition,
             genre: genre,
             publisher: publisher,
@@ -21,7 +23,7 @@ class BookController {
             price: price,
             quantity: quantity
         }).then(function (){
-            res.redirect('/');
+            res.redirect('/home');
         }).catch(function (error){
             res.send("Error: " + error);
         });
@@ -32,7 +34,7 @@ class BookController {
 
         const findBook = book.findOne({
             where: {id: book_id},
-            attributes: ['id', 'tittle', 'age', 'edition']
+            attributes: ['id', 'tittle', 'author', 'description', 'edition', 'genre', 'publisher', 'language', 'price', 'quantity']
         }).then(function (rawBook){
             let books = [];
             books.push(rawBook.dataValues);
@@ -44,12 +46,18 @@ class BookController {
                         return {
                             id: data.id,
                             tittle: data.tittle,
-                            age: data.age,
+                            author: data.author,
+                            description: data.description,
                             edition: data.edition,
+                            genre: data.genre,
+                            publisher: data.publisher,
+                            language: data.language,
+                            price: data.price,
+                            quantity: data.quantity
                         }
                     })
                 }
-                res.render('form-register', {book: object.mapBook});
+                res.render('./book/create', {book: object.mapBook});
             }
         });
     }
@@ -57,17 +65,25 @@ class BookController {
     update (req, res) {
         let id = req.body.id;
         let tittle = req.body.tittle;
+        let author = req.body.author;
+        let description = req.body.description;
         let edition = req.body.edition;
         let genre = req.body.genre;
-
-        const bcrypt = require('bcryptjs');
-        const salt = bcrypt.genSaltSync(10);
-        let hash = bcrypt.hashSync(genre, salt);
+        let publisher = req.body.publisher;
+        let language = req.body.language;
+        let price = req.body.price;
+        let quantity = req.body.quantity;
 
         book.update({
             tittle: tittle,
+            author: author,
+            description: description,
             edition: edition,
-            genre: hash
+            genre: genre,
+            publisher: publisher,
+            language: language,
+            price: price,
+            quantity: quantity
         }, {where: {id: id},}).then(function (){
             res.redirect('/home');
         }).catch(function (error){
@@ -91,7 +107,7 @@ class BookController {
         if (book_id) {
             const findBook = book.findOne({
                 where: {id: book_id},
-                attributes: ['id', 'tittle', 'age', 'edition', 'admin', 'createdAt']
+                attributes: ['id', 'tittle', 'author', 'description', 'edition', 'genre', 'publisher', 'language', 'price', 'quantity']
             }).then(function (rawBook){
                 let books = [];
                 books.push(rawBook.dataValues);
@@ -103,31 +119,41 @@ class BookController {
                             return {
                                 id: data.id,
                                 tittle: data.tittle,
-                                age: data.age,
+                                author: data.author,
+                                description: data.description,
                                 edition: data.edition,
-                                admin: data.admin,
-                                createdAt: data.createdAt
+                                genre: data.genre,
+                                publisher: data.publisher,
+                                language: data.language,
+                                price: data.price,
+                                quantity: data.quantity
                             }
                         })
                     }
-                    res.render('show-book', {book: object.mapBook});
+                    res.render('./book/show', {book: object.mapBook});
                 }
             });
         } else {
             book.findAll({
-                attributes: ['id', 'tittle', 'age', 'edition']
+                attributes: ['id', 'tittle', 'description', 'author', 'edition', 'genre', 'publisher', 'language', 'price', 'quantity']
             }).then(function (rawBooks){
                 const object = {
                     books: rawBooks.map(data => {
                         return {
                             id: data.id,
                             tittle: data.tittle,
-                            age: data.age,
-                            edition: data.edition
+                            author: data.author,
+                            description: data.description,
+                            edition: data.edition,
+                            genre: data.genre,
+                            publisher: data.publisher,
+                            language: data.language,
+                            price: data.price,
+                            quantity: data.quantity
                         }
                     })
                 }
-                res.render('list-books', {books: object.books});
+                res.render('./book/list', {books: object.books});
             }).catch(function (error){
                 res.send("Error: " + error);
             });

@@ -1,0 +1,28 @@
+{{#each user}}
+<div class="mt-4 card text-center">
+    <div class="card-header">
+        {{#if admin}} Admin {{else}} Customer {{/if}}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{name}}, {{age}}</h5>
+        <p class="card-text">{{email}}</p>
+
+        <a href="/users/edit/{{id}}" class="btn btn-primary">Edit</a>
+        <a id="btn-delete" class="btn btn-danger" onclick="deleteRecord({{id}})">Delete</a>
+        <a href="/users" class="btn btn-secondary">Go back</a>
+    </div>
+    <div class="card-footer text-muted">
+        {{createdAt}}
+    </div>
+</div>
+{{/each}}
+
+<script>
+    function deleteRecord(id) {
+        var result = confirm("Do you really want to delete this record? This process cannot be undone.");
+        if (result) {
+            let button = document.getElementById("btn-delete");
+            button.href = "/users/delete/" + id;
+        }
+    }
+</script>

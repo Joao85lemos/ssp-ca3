@@ -1,0 +1,54 @@
+<table class="mt-4 table table-striped">
+    <thead>
+    <tr>
+        <th scope="row">#</th>
+        <th scope="col">tittle</th>
+        <th scope="col">author</th>
+        <th scope="col">edition</th>
+        <th scope="col">genre</th>
+        <th scope="col">publisher</th>
+        <th scope="col">language</th>
+        <th scope="col">price</th>
+        <th scope="col">quantity</th>
+        <th scope="col">actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each books}}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{tittle}}</td>
+        <td>{{author}}</td>
+        <td>{{edition}}</td>
+        <td>{{genre}}</td>
+        <td>{{publisher}}</td>
+        <td>{{language}}</td>
+        <td>{{price}}</td>
+        <td>{{quantity}}</td>
+        <td>
+            <div class="row">
+                <div class="col-3">
+                    <a href="/books/edit/{{id}}" class="btn btn-primary">Edit</a>
+                </div>
+                <div class="col-3">
+                    <a href="/books/show/{{id}}" class="btn btn-info">Show</a>
+                </div>
+                <div class="col-3">
+                    <a id="btn-delete" class="btn btn-danger" onclick="deleteRecord({{id}})">Delete</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+<script>
+    function deleteRecord(id) {
+        var result = confirm("Do you really want to delete this record? This process cannot be undone.");
+        if (result) {
+            let button = document.getElementById("btn-delete");
+            button.href = "/books/delete/" + id;
+        }
+    }
+</script>
