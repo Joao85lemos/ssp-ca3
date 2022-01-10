@@ -1,0 +1,45 @@
+<table class="mt-4 table table-striped">
+    <thead>
+    <tr>
+        <th scope="row">number</th>
+        <th scope="col">order_date</th>
+        <th scope="col">amount</th>
+        <th scope="col">user</th>
+        <th scope="col">book</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each orders}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{order_date}}</td>
+            <td>{{amount}}</td>
+            <td>{{userId}}</td>
+            <td>{{bookId}}</td>
+            <td>
+                <div class="row">
+                    <div class="col-3">
+                        <a href="/orders/edit/{{id}}" class="btn btn-primary">Edit</a>
+                    </div>
+                    <div class="col-3">
+                        <a href="/orders/show/{{id}}" class="btn btn-info">Show</a>
+                    </div>
+                    <div class="col-3">
+                        <a id="btn-delete" class="btn btn-danger" onclick="deleteRecord({{id}})">Delete</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+<script>
+    function deleteRecord(id) {
+        var result = confirm("Do you really want to delete this record? This process cannot be undone.");
+        if (result) {
+            let button = document.getElementById("btn-delete");
+            button.href = "/orders/delete/" + id;
+        }
+    }
+</script>
