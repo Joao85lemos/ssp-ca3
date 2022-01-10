@@ -1,5 +1,8 @@
-const user = require('../models/User');
+const User = require('../models/user');
 const bcrypt = require("bcryptjs");
+const db = require('../database/database');
+
+const user = User(db.sequelize, db.Sequelize);
 
 class UserController {
     create (req, res) {

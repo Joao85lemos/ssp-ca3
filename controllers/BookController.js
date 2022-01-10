@@ -1,4 +1,7 @@
-const book = require('../models/Book');
+const db = require('../database/database');
+const Book = require("../models/book");
+
+const book = Book(db.sequelize, db.Sequelize);
 
 class BookController {
     create (req, res) {
