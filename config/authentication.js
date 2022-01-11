@@ -12,7 +12,7 @@ module.exports = function (passport) {
             if (!findUser) {
                 return done(null, false, {message: "The email doesnt exists!"});
             }
-
+            //test if the password match
             bcrypt.compare(password, findUser.password, (error, match) => {
                 if (match) {
                     return done(null, findUser)
